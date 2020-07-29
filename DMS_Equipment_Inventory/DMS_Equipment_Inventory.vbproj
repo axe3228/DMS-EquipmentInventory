@@ -73,6 +73,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\cConstant.vb" />
+    <Compile Include="frmAddItem.Designer.vb">
+      <DependentUpon>frmAddItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +87,21 @@
       <DependentUpon>frmMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmManageRepo.Designer.vb">
+      <DependentUpon>frmManageRepo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmManageRepo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearchEquipment.Designer.vb">
+      <DependentUpon>frmSearchEquipment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSearchEquipment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module\modController.vb" />
+    <Compile Include="Module\modGeneral.vb" />
+    <Compile Include="Module\modServerBridge.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -97,8 +119,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAddItem.resx">
+      <DependentUpon>frmAddItem.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmManageRepo.resx">
+      <DependentUpon>frmManageRepo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearchEquipment.resx">
+      <DependentUpon>frmSearchEquipment.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -119,9 +150,6 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Class\" />
-    <Folder Include="Module\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
