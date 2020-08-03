@@ -23,7 +23,7 @@
 
     Private Sub Initialize()
         Select Case type
-            Case "Item"
+            Case "Equipment"
                 lblItem.Visible = False
                 txtItem.Visible = False
                 btnSearchItem.Visible = False
@@ -31,13 +31,17 @@
                 lblFormTitle.Text = "Add Equipment"
 
                 If Not _class.idEngrEquipment = Nothing Then
-                    txtName.Text = _class.EngrEqptName
+                    txtName.Text = _class.EngrEquipmentName
                     btnAdd.Text = "Update"
                 End If
             Case "Brand"
                 lblFormTitle.Text = "Add Brand"
             Case "Location"
+                lblItem.Visible = False
+                txtItem.Visible = False
+                btnSearchItem.Visible = False
                 lblFormTitle.Text = "Add Location"
+
         End Select
     End Sub
 
@@ -51,22 +55,20 @@
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Select Case type
-            Case "Item"
-
+            Case "Equipment"
                 If Not _class.idEngrEquipment = Nothing Then
-                    modServerBridge.UpdateItem(_class.idEngrEquipment, txtName.Text)
+                    modServerBridge.UpdateEquipment(_class.idEngrEquipment, txtName.Text)
                 Else
-                    modServerBridge.POSTItem(txtName.Text)
+                    MsgBox(modServerBridge.POSTEquipment(txtName.Text))
                 End If
+
             Case "Brand"
                 lblFormTitle.Text = "Add Brand"
-                'modServerBridge.POSTBrand()
-            Case "Location"
-                lblItem.Visible = False
-                txtItem.Visible = False
-                btnSearchItem.Visible = False
+                MsgBox(modServerBridge.POSTBrand(txtItem.Text, txtName.Text))
 
+            Case "Location"
                 lblFormTitle.Text = "Add Location"
+                MsgBox(modServerBridge.POSTLocation(txtName.Text))
         End Select
 
         FieldClear(Panel2)
@@ -85,8 +87,8 @@
 
         If frm IsNot Nothing Then
             If frm.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                ' idEqpt = frm.idGetSet
-                ' txtOne.Text = frm.Equipment
+
+                txtItem.Text = frm.FSECLSConstant.EngrEquipmentName
             End If
         End If
     End Sub

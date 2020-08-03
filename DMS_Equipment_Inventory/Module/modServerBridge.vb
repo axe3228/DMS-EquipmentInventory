@@ -4,8 +4,6 @@ Module modServerBridge
 
     Private msg As String = ""
     Private sQuery As String = ""
-
-    'Item *
     Public Function unidGenerator(tbl As String) As Integer
         Dim result As Integer = 0
         sQuery = "SELECT COUNT(*) FROM " & tbl
@@ -25,7 +23,8 @@ Module modServerBridge
         Return result
     End Function
 
-    Public Function POSTItem(name As String) As String
+#Region "EQUIPMENT"
+    Public Function POSTEquipment(name As String) As String
         sQuery = "INSERT INTO EngrEquipment (unEngrEquipment, EngrEqptName, unAccountUser) VALUES (@unEngrEquipment, @EngrEqptName, @unAccountUser)"
 
         Using oConnection As New SqlConnection(modGeneral.getConnectionString)
@@ -48,7 +47,7 @@ Module modServerBridge
         Return msg
     End Function
 
-    Public Function GETItem() As List(Of cConstant)
+    Public Function GetEquipment() As List(Of cConstant)
         Dim result As New List(Of cConstant)
         sQuery = "SELECT idEngrEquipment, unEngrEquipment, EngrEqptName, unAccountUser FROM EngrEquipment"
 
@@ -62,7 +61,7 @@ Module modServerBridge
                         Dim c As New cConstant
                         c.idEngrEquipment = oReader("idEngrEquipment")
                         c.unEngrEquipment = oReader("unEngrEquipment")
-                        c.EngrEqptName = oReader("EngrEqptName")
+                        c.EngrEquipmentName = oReader("EngrEqptName")
 
                         result.Add(c)
                     End While
@@ -75,7 +74,7 @@ Module modServerBridge
         Return result
     End Function
 
-    Public Function UpdateItem(id As String, name As String) As String
+    Public Function UpdateEquipment(id As String, name As String) As String
         Dim result As String = ""
         sQuery = "UPDATE EngrEquipment
                   SET EngrEqptName = @EngrEqptName
@@ -99,19 +98,19 @@ Module modServerBridge
 
         Return result
     End Function
-    '* Item 
+#End Region
 
-    'Brand *
-    Public Function POSTBrand(idEquip As Integer, name As String) As String
-        sQuery = "INSERT INTO EngrEquipmentBrand (unEngrEquipmentBrand, idEngrEquipment, EEBName, unAccountUser) VALUES (@unEngrEquipmentBrand, @idEngrEquipment, @EEBName, @unAccountUser)"
+#Region "BRAND"
+    Public Function POSTBrand(equipment As String, brand As String) As String
+        sQuery = "INSERT INTO EngrEquipmentBrand (unEngrEquipmentBrand, EngrEquipmentName, EEBName, unAccountUser) VALUES (@unEngrEquipmentBrand, @EngrEquipmentName, @EEBName, @unAccountUser)"
 
         Using oConnection As New SqlConnection(modGeneral.getConnectionString())
             Try
                 oConnection.Open()
                 Using oCommand As New SqlCommand(sQuery, oConnection)
                     oCommand.Parameters.AddWithValue("@unEngrEquipmentBrand", unidGenerator("EngrEquipmentBrand"))
-                    oCommand.Parameters.AddWithValue("@idEngrEquipment", idEquip)
-                    oCommand.Parameters.AddWithValue("@EEBName", name)
+                    oCommand.Parameters.AddWithValue("@EngrEquipmentName", equipment)
+                    oCommand.Parameters.AddWithValue("@EEBName", brand)
                     oCommand.Parameters.AddWithValue("@unAccountUser", "admin")
 
                     oCommand.ExecuteNonQuery()
@@ -127,9 +126,9 @@ Module modServerBridge
 
     Public Function GetBrand() As List(Of cConstant)
         Dim result As New List(Of cConstant)
-        sQuery = "SELECT EngrEquipmentBrand.idEngrEquipmentBrand, EngrEquipmentBrand.unEngrEquipmentBrand, EngrEquipmentBrand.unEngrEquipmentBrand, EngrEquipmentBrand.idEngrEquipment, EngrEquipmentBrand.EEBName, EngrEquipment.EngrEqptName
+        sQuery = "SELECT idEngrEquipmentBrand, unEngrEquipmentBrand, EngrEquipmentName, EEBName
                   FROM EngrEquipmentBrand
-                  INNER JOIN EngrEquipment ON EngrEquipmentBrand.idEngrEquipment = EngrEquipment.idEngrEquipment"
+                  WHERE Status = 1"
 
         Using oConnection As New SqlConnection(modGeneral.getConnectionString())
             Try
@@ -141,8 +140,8 @@ Module modServerBridge
                         Dim c As New cConstant
                         c.idEngrEquipmentBrand = oReader("idEngrEquipmentBrand")
                         c.unEngrEquipmentBrand = oReader("unEngrEquipmentBrand")
-                        c.EngrEqptName = oReader("EngrEqptName")
-                        c.EEBName = oReader("EEBName")
+                        c.EngrEquipmentName = oReader("EngrEquipmentName")
+                        c.BrandName = oReader("EEBName")
 
                         result.Add(c)
                     End While
@@ -154,5 +153,58 @@ Module modServerBridge
 
         Return result
     End Function
-    '* Brand
+#End Region
+
+#Region "Location"
+    Public Function POSTLocation(name) As String
+        sQuery = "INSERT INTO EngrLocations (unEngrLocation, elLocationName, unAccountUser) VALUES (@unEngrLocation, @elLocationName, @unAccountUser)"
+
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@unEngrLocation", unidGenerator("EngrLocations"))
+                    oCommand.Parameters.AddWithValue("@elLocationName", name)
+                    oCommand.Parameters.AddWithValue("@unAccountUser", "admin")
+                    oCommand.ExecuteNonQuery()
+
+                    msg = "Location has been added"
+                End Using
+            Catch ex As Exception
+                msg = ex.ToString
+            End Try
+        End Using
+
+        Return msg
+    End Function
+
+    Public Function GetLocation() As List(Of cConstant)
+        Dim result As New List(Of cConstant)
+        sQuery = "SELECT idEngrLocation, unEngrLocation, elLocationName, unAccountUser FROM EngrLocations"
+
+        Using oConn As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConn.Open()
+                Using oCmd As New SqlCommand(sQuery, oConn)
+                    Dim oReader As SqlDataReader = oCmd.ExecuteReader
+
+                    While oReader.Read
+                        Dim c As New cConstant
+                        c.idEngrLocation = oReader("idEngrLocation")
+                        c.unEngrLocation = oReader("unEngrLocation")
+                        c.LocatioName = oReader("elLocationName")
+                        c.unAccountUser = oReader("unAccountUser")
+
+                        result.Add(c)
+                    End While
+                End Using
+            Catch ex As Exception
+
+            End Try
+        End Using
+
+        Return result
+    End Function
+#End Region
+
 End Module

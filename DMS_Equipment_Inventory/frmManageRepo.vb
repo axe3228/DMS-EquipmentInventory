@@ -29,9 +29,11 @@
                 addColumn("ID", 70)
                 addColumn("Equipment", 170)
                 addColumn("Brand", 155)
+                modController.BrandLoad(lvRepository)
             Case EMDInventory.Location
                 addColumn("ID", 70)
                 addColumn("Location", 170)
+                modController.LocationsLoad(lvRepository)
         End Select
     End Sub
 
@@ -76,7 +78,7 @@
         Dim frm As frmAddItem = Nothing
         Select Case type
             Case 0
-                frm = New frmAddItem("Item")
+                frm = New frmAddItem("Equipment")
             Case 1
                 frm = New frmAddItem("Brand")
             Case 2
@@ -95,12 +97,27 @@
         End If
     End Sub
 
-    Private Sub tsbUpdate_Click(sender As Object, e As EventArgs) Handles tsbUpdate.Click
+    Private Sub lvRepository_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvRepository.SelectedIndexChanged
+        If lvRepository.SelectedItems.Count < 1 Then Return
+
+        Select Case tscbRepository.SelectedItem
+            Case "Equipment"
+                _class.idEngrEquipment = lvRepository.SelectedItems(0).Tag
+                _class.EngrEquipmentName = lvRepository.SelectedItems(0).SubItems(1).Text
+            Case "Brand"
+                type = EMDInventory.Brand
+            Case "Location"
+                type = EMDInventory.Location
+        End Select
+
+    End Sub
+
+    Private Sub lvRepository_DoubleClick(sender As Object, e As EventArgs) Handles lvRepository.DoubleClick
         Dim frm As frmAddItem = Nothing
 
         Select Case tscbRepository.SelectedItem
             Case "Equipment"
-                frm = New frmAddItem("Item")
+                frm = New frmAddItem("Equipment")
                 frm.cConstant = _class
             Case "Brand"
                 type = EMDInventory.Brand
@@ -112,20 +129,5 @@
             frm.ShowDialog()
             Initialize()
         End If
-    End Sub
-
-    Private Sub lvRepository_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvRepository.SelectedIndexChanged
-        If lvRepository.SelectedItems.Count < 1 Then Return
-
-        Select Case tscbRepository.SelectedItem
-            Case "Equipment"
-                _class.idEngrEquipment = lvRepository.SelectedItems(0).Tag
-                _class.EngrEqptName = lvRepository.SelectedItems(0).SubItems(1).Text
-            Case "Brand"
-                type = EMDInventory.Brand
-            Case "Location"
-                type = EMDInventory.Location
-        End Select
-
     End Sub
 End Class

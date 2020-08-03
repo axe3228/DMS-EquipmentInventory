@@ -120,9 +120,6 @@
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>239, 17</value>
   </metadata>
-  <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tsbAddRepo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -131,6 +128,9 @@
         qDLiAFTPUAvEEQcYGACtzm+R+iXjmAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="tsbClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -144,16 +144,6 @@
         mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
         kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
         TgDQASA1MVpwzwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="tsbUpdate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADySURBVDhPrZPNDcIwDIU7AiMwAiN0BG7ABXUERmCDIrEA
-        I3DmTz1wYwUOHBEnJmh4L3ba/DQcEJ9kxbKfHSdpi79jjCnbtt1jDdBYSQ38jRXHMCFy08AqWKlGnzE2
-        unIFEy0TvOJKQwnQXFRD1hqWsSWWL0ZuJ5KORlO2M8/XBwZAfgzdSrVvdgAjlyTZ3YeAnlMHDewN/8S3
-        BotTPZ0d6sf8WBsafcY0LWiD5AgUusLYgia5S/R3jo05lXUXQoIphgqJ81UmYIrkQ4qL3OpMZT1eE/sp
-        L8/bpxMTvzg4gg903c90e92DIt+Sl8jx/RmL4gP2+pksJPO9LgAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>

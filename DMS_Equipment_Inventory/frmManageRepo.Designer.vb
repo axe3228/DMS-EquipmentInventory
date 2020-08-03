@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmManageRepo
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmManageRepo
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmManageRepo))
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -33,8 +33,6 @@ Partial Class frmManageRepo
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsbClose = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsbUpdate = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -82,7 +80,7 @@ Partial Class frmManageRepo
         '
         Me.ToolStrip1.BackColor = System.Drawing.Color.Firebrick
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscbRepository, Me.ToolStripSeparator1, Me.tsbAddRepo, Me.ToolStripSeparator2, Me.tsbUpdate})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscbRepository, Me.ToolStripSeparator1, Me.tsbAddRepo})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(0, 0, 1, 5)
@@ -146,22 +144,6 @@ Partial Class frmManageRepo
         Me.tsbClose.Size = New System.Drawing.Size(23, 18)
         Me.tsbClose.Text = "X"
         '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Margin = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 23)
-        '
-        'tsbUpdate
-        '
-        Me.tsbUpdate.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tsbUpdate.ForeColor = System.Drawing.Color.White
-        Me.tsbUpdate.Image = CType(resources.GetObject("tsbUpdate.Image"), System.Drawing.Image)
-        Me.tsbUpdate.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbUpdate.Name = "tsbUpdate"
-        Me.tsbUpdate.Size = New System.Drawing.Size(67, 20)
-        Me.tsbUpdate.Text = "Update"
-        '
         'frmManageRepo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -195,6 +177,4 @@ Partial Class frmManageRepo
     Friend WithEvents tsbAddRepo As ToolStripButton
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents tsbClose As ToolStripButton
-    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
-    Friend WithEvents tsbUpdate As ToolStripButton
 End Class

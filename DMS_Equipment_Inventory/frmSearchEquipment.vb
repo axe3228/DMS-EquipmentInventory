@@ -1,5 +1,6 @@
 ﻿Public Class frmSearchEquipment
     Public type As EMDInventory
+    Private _cConstant As New cConstant
 
     Enum EMDInventory
         Equipment
@@ -13,6 +14,15 @@
         InitializeComponent()
         Me.type = type
     End Sub
+
+    Public Property FSECLSConstant As cConstant
+        Get
+            Return _cConstant
+        End Get
+        Set(value As cConstant)
+            _cConstant = value
+        End Set
+    End Property
 
     Private Sub frmSearchEquipment_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' modGui.updateGui(Me)
@@ -64,5 +74,15 @@
 
     Private Sub btnCancel_Click_1(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Close()
+    End Sub
+
+    Private Sub lvItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvItems.SelectedIndexChanged
+        If lvItems.SelectedItems.Count < 1 Then Return
+
+        _cConstant.EngrEquipmentName = lvItems.SelectedItems(0).SubItems(1).Text
+    End Sub
+
+    Private Sub lvItems_DoubleClick(sender As Object, e As EventArgs) Handles lvItems.DoubleClick
+        btnOk.PerformClick()
     End Sub
 End Class
