@@ -29,7 +29,7 @@
                 addColumn("ID", 70)
                 addColumn("Equipment", 170)
                 addColumn("Brand", 155)
-                modController.BrandLoad(lvRepository)
+                modController.BrandLoad(lvRepository, False, "")
             Case EMDInventory.Location
                 addColumn("ID", 70)
                 addColumn("Location", 170)

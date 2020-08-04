@@ -46,7 +46,7 @@ Partial Class frmReceive
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel1.BackColor = System.Drawing.Color.Gray
+        Me.Panel1.BackColor = System.Drawing.Color.Firebrick
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.lblTitle)
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
@@ -81,7 +81,7 @@ Partial Class frmReceive
         'btnCancel
         '
         Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCancel.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnCancel.BackColor = System.Drawing.Color.Firebrick
         Me.btnCancel.FlatAppearance.BorderSize = 0
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCancel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -96,7 +96,7 @@ Partial Class frmReceive
         'btnAdd
         '
         Me.btnAdd.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAdd.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnAdd.BackColor = System.Drawing.Color.Firebrick
         Me.btnAdd.FlatAppearance.BorderSize = 0
         Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAdd.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -105,7 +105,7 @@ Partial Class frmReceive
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(75, 23)
         Me.btnAdd.TabIndex = 149
-        Me.btnAdd.Text = "Add"
+        Me.btnAdd.Text = "Receive"
         Me.btnAdd.UseVisualStyleBackColor = False
         '
         'Label3
@@ -148,7 +148,7 @@ Partial Class frmReceive
         '
         'btnEquipment
         '
-        Me.btnEquipment.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnEquipment.BackColor = System.Drawing.Color.Firebrick
         Me.btnEquipment.FlatAppearance.BorderSize = 0
         Me.btnEquipment.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnEquipment.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -182,7 +182,7 @@ Partial Class frmReceive
         '
         'btnBrand
         '
-        Me.btnBrand.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnBrand.BackColor = System.Drawing.Color.Firebrick
         Me.btnBrand.FlatAppearance.BorderSize = 0
         Me.btnBrand.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnBrand.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

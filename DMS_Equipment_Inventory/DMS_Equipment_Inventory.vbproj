@@ -74,10 +74,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\cConstant.vb" />
+    <Compile Include="Class\cDeployment.vb" />
+    <Compile Include="Class\cEquipmentStockControl.vb" />
+    <Compile Include="Class\cEquipmentStockData.vb" />
     <Compile Include="frmAddItem.Designer.vb">
       <DependentUpon>frmAddItem.vb</DependentUpon>
     </Compile>
     <Compile Include="frmAddItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeployItem.Designer.vb">
+      <DependentUpon>frmDeployItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDeployItem.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.vb">
@@ -127,6 +136,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmAddItem.resx">
       <DependentUpon>frmAddItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDeployItem.resx">
+      <DependentUpon>frmDeployItem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
