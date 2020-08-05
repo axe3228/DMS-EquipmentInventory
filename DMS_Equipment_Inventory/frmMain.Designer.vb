@@ -32,12 +32,12 @@ Partial Class frmMain
         Me.chBrand = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chStock = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chDeployed = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.chTotalStock = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tpDeployment = New System.Windows.Forms.TabPage()
         Me.scDeployment = New System.Windows.Forms.SplitContainer()
         Me.lvLocation = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ilListViewIcons = New System.Windows.Forms.ImageList(Me.components)
         Me.msLocationCount = New System.Windows.Forms.MenuStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.scDepContainer = New System.Windows.Forms.SplitContainer()
@@ -49,6 +49,8 @@ Partial Class frmMain
         Me.tsbDeploy = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbReturn = New System.Windows.Forms.ToolStripButton()
+        Me.tss2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsbDefective = New System.Windows.Forms.ToolStripButton()
         Me.lvDeployedEquipments = New System.Windows.Forms.ListView()
         Me.chId = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chDName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -61,7 +63,6 @@ Partial Class frmMain
         Me.lvEqStockControl = New System.Windows.Forms.ListView()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ilListViewIcons = New System.Windows.Forms.ImageList(Me.components)
         Me.MenuStrip2 = New System.Windows.Forms.MenuStrip()
         Me.tsbNewDocu = New System.Windows.Forms.ToolStripButton()
         Me.msRDocCount = New System.Windows.Forms.MenuStrip()
@@ -84,6 +85,7 @@ Partial Class frmMain
         Me.chRBrand = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chRSerial = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chRModel = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tsMain = New System.Windows.Forms.ToolStrip()
         Me.tslManage = New System.Windows.Forms.ToolStripLabel()
         Me.tsbEquipment = New System.Windows.Forms.ToolStripButton()
@@ -94,9 +96,9 @@ Partial Class frmMain
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbClose = New System.Windows.Forms.ToolStripButton()
         Me.ilLocationIcons = New System.Windows.Forms.ImageList(Me.components)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.tss2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsbDefective = New System.Windows.Forms.ToolStripButton()
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Panel1.SuspendLayout()
         Me.tcMain.SuspendLayout()
         Me.tpInventory.SuspendLayout()
@@ -165,8 +167,9 @@ Partial Class frmMain
         'lvInventory
         '
         Me.lvInventory.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.lvInventory.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chName, Me.chBrand, Me.chStock, Me.chDeployed, Me.chTotalStock})
+        Me.lvInventory.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chName, Me.chBrand, Me.chStock, Me.chDeployed, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8})
         Me.lvInventory.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lvInventory.FullRowSelect = True
         Me.lvInventory.HideSelection = False
         Me.lvInventory.Location = New System.Drawing.Point(3, 3)
         Me.lvInventory.Name = "lvInventory"
@@ -194,11 +197,6 @@ Partial Class frmMain
         '
         Me.chDeployed.Text = "Deployed"
         Me.chDeployed.Width = 80
-        '
-        'chTotalStock
-        '
-        Me.chTotalStock.Text = "Total Stock"
-        Me.chTotalStock.Width = 80
         '
         'tpDeployment
         '
@@ -244,6 +242,13 @@ Partial Class frmMain
         Me.lvLocation.TabIndex = 1
         Me.lvLocation.UseCompatibleStateImageBehavior = False
         Me.lvLocation.View = System.Windows.Forms.View.Tile
+        '
+        'ilListViewIcons
+        '
+        Me.ilListViewIcons.ImageStream = CType(resources.GetObject("ilListViewIcons.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ilListViewIcons.TransparentColor = System.Drawing.Color.Transparent
+        Me.ilListViewIcons.Images.SetKeyName(0, "document.png")
+        Me.ilListViewIcons.Images.SetKeyName(1, "location.png")
         '
         'msLocationCount
         '
@@ -360,6 +365,21 @@ Partial Class frmMain
         Me.tsbReturn.Size = New System.Drawing.Size(65, 20)
         Me.tsbReturn.Text = "Return"
         '
+        'tss2
+        '
+        Me.tss2.Name = "tss2"
+        Me.tss2.Size = New System.Drawing.Size(6, 23)
+        '
+        'tsbDefective
+        '
+        Me.tsbDefective.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tsbDefective.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.tsbDefective.Image = CType(resources.GetObject("tsbDefective.Image"), System.Drawing.Image)
+        Me.tsbDefective.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbDefective.Name = "tsbDefective"
+        Me.tsbDefective.Size = New System.Drawing.Size(81, 20)
+        Me.tsbDefective.Text = "Defective"
+        '
         'lvDeployedEquipments
         '
         Me.lvDeployedEquipments.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chId, Me.chDName, Me.chDBrand, Me.chDSerial, Me.chDModel, Me.chDDate})
@@ -447,13 +467,6 @@ Partial Class frmMain
         Me.lvEqStockControl.TabIndex = 2
         Me.lvEqStockControl.UseCompatibleStateImageBehavior = False
         Me.lvEqStockControl.View = System.Windows.Forms.View.Tile
-        '
-        'ilListViewIcons
-        '
-        Me.ilListViewIcons.ImageStream = CType(resources.GetObject("ilListViewIcons.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ilListViewIcons.TransparentColor = System.Drawing.Color.Transparent
-        Me.ilListViewIcons.Images.SetKeyName(0, "document.png")
-        Me.ilListViewIcons.Images.SetKeyName(1, "location.png")
         '
         'MenuStrip2
         '
@@ -659,6 +672,11 @@ Partial Class frmMain
         Me.chRModel.Text = "Model"
         Me.chRModel.Width = 120
         '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "State"
+        Me.ColumnHeader5.Width = 80
+        '
         'tsMain
         '
         Me.tsMain.BackColor = System.Drawing.Color.Firebrick
@@ -740,27 +758,20 @@ Partial Class frmMain
         Me.ilLocationIcons.TransparentColor = System.Drawing.Color.Transparent
         Me.ilLocationIcons.Images.SetKeyName(0, "location.png")
         '
-        'ColumnHeader5
+        'ColumnHeader6
         '
-        Me.ColumnHeader5.Text = "State"
-        Me.ColumnHeader5.Width = 80
+        Me.ColumnHeader6.Text = "Returned"
+        Me.ColumnHeader6.Width = 100
         '
-        'tss2
+        'ColumnHeader7
         '
-        Me.tss2.Name = "tss2"
-        Me.tss2.Size = New System.Drawing.Size(6, 23)
-        Me.tss2.Visible = False
+        Me.ColumnHeader7.Text = "Defective"
+        Me.ColumnHeader7.Width = 100
         '
-        'tsbDefective
+        'ColumnHeader8
         '
-        Me.tsbDefective.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tsbDefective.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.tsbDefective.Image = CType(resources.GetObject("tsbDefective.Image"), System.Drawing.Image)
-        Me.tsbDefective.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbDefective.Name = "tsbDefective"
-        Me.tsbDefective.Size = New System.Drawing.Size(81, 20)
-        Me.tsbDefective.Text = "Defective"
-        Me.tsbDefective.Visible = False
+        Me.ColumnHeader8.Text = "Total Stock"
+        Me.ColumnHeader8.Width = 100
         '
         'frmMain
         '
@@ -834,7 +845,6 @@ Partial Class frmMain
     Friend WithEvents chBrand As ColumnHeader
     Friend WithEvents chStock As ColumnHeader
     Friend WithEvents chDeployed As ColumnHeader
-    Friend WithEvents chTotalStock As ColumnHeader
     Friend WithEvents scDeployment As SplitContainer
     Friend WithEvents lvLocation As ListView
     Friend WithEvents msLocationCount As MenuStrip
@@ -888,4 +898,7 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents tss2 As ToolStripSeparator
     Friend WithEvents tsbDefective As ToolStripButton
+    Friend WithEvents ColumnHeader6 As ColumnHeader
+    Friend WithEvents ColumnHeader7 As ColumnHeader
+    Friend WithEvents ColumnHeader8 As ColumnHeader
 End Class

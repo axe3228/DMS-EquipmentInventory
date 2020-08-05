@@ -19,6 +19,8 @@
         If frm IsNot Nothing Then
             frm.ShowDialog()
         End If
+
+        modController.InventoryLoad(lvInventory)
     End Sub
 
     Private Sub tsbLocation_Click(sender As Object, e As EventArgs) Handles tsbLocation.Click
@@ -31,12 +33,16 @@
     Private Sub tcMain_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tcMain.SelectedIndexChanged
         Select Case tcMain.SelectedIndex
             Case 0
-
+                modController.InventoryLoad(lvInventory)
             Case 1
                 modController.DeploymentLocationsLoad(lvLocation)
             Case 2
                 modController.StockControlLoad(lvEqStockControl)
         End Select
+    End Sub
+
+    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        modController.InventoryLoad(lvInventory)
     End Sub
 
 #Region "Receiving"
@@ -99,7 +105,7 @@
     End Sub
 
     Private Sub tsbReturn_Click(sender As Object, e As EventArgs) Handles tsbReturn.Click
-        If modServerBridge.UpdateStockData(lvDeployedEquipments.SelectedItems(0).Tag, "Warehouse") Then
+        If modServerBridge.UpdateStockData(lvDeployedEquipments.SelectedItems(0).Tag, "Warehouse", "Returned") Then
 
             MsgBox(modServerBridge.UpdateDeploymentStatus(lvDeployedEquipments.SelectedItems(0).SubItems(6).Text, 0, "Returned", "Equipment has been returned"))
             modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
@@ -110,6 +116,15 @@
         If lvDeployedEquipments.SelectedItems.Count < 1 Then Return
 
     End Sub
+
+    Private Sub tsbDefective_Click(sender As Object, e As EventArgs) Handles tsbDefective.Click
+        If modServerBridge.UpdateStockData(lvDeployedEquipments.SelectedItems(0).Tag, "Bin", "Defective") Then
+
+            MsgBox(modServerBridge.UpdateDeploymentStatus(lvDeployedEquipments.SelectedItems(0).SubItems(6).Text, 0, "Defective", "Equipment has been pollout"))
+            modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
+        End If
+    End Sub
+
 #End Region
 
 End Class

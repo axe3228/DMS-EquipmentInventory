@@ -329,7 +329,7 @@ Module modServerBridge
         Dim result As New List(Of cEquipmentStockData)
 
         If id <> 0 Then
-            sQuery = "SELECT idEngrEquipmentStockData, unEngrEquipmentStockData, idEngrEquipmentStockControl, EESDEquipment, EESDBrand, EESDSerial, EESDModel, EESDState 
+            sQuery = "SELECT idEngrEquipmentStockData, unEngrEquipmentStockData, idEngrEquipmentStockControl, EESDEquipment, EESDBrand, EESDSerial, EESDModel, EESDState, EESDLocation
                  FROM EngrEquipmentStockData WHERE idEngrEquipmentStockControl = @idEngrEquipmentStockControl"
         Else
             sQuery = "SELECT idEngrEquipmentStockData, unEngrEquipmentStockData, idEngrEquipmentStockControl, EESDEquipment, EESDBrand, EESDSerial, EESDModel, EESDState, EESDLocation 
@@ -364,17 +364,17 @@ Module modServerBridge
         Return result
     End Function
 
-    Public Function UpdateStockData(id As Integer, location As String) As Boolean
+    Public Function UpdateStockData(id As Integer, location As String, state As String) As Boolean
         Dim result = False
 
-        sQuery = "UPDATE EngrEquipmentStockData SET EESDLocation = @EESDLocation WHERE idEngrEquipmentStockData = @idEngrEquipmentStockData"
+        sQuery = "UPDATE EngrEquipmentStockData SET EESDLocation = @EESDLocation, EESDState = @EESDState WHERE idEngrEquipmentStockData = @idEngrEquipmentStockData"
         Using oConnection As New SqlConnection(modGeneral.getConnectionString())
             Try
                 oConnection.Open()
                 Using oCommand As New SqlCommand(sQuery, oConnection)
                     oCommand.Parameters.AddWithValue("@idEngrEquipmentStockData", id)
                     oCommand.Parameters.AddWithValue("@EESDLocation", location)
-                    'oCommand.Parameters.AddWithValue("@EESDState", state)
+                    oCommand.Parameters.AddWithValue("@EESDState", state)
 
                     oCommand.ExecuteNonQuery()
 
@@ -495,6 +495,32 @@ Module modServerBridge
 
                     Dim i = oCommand.ExecuteScalar
                     If i <> 0 Then result = True
+                End Using
+            Catch ex As Exception
+
+            End Try
+        End Using
+
+        Return result
+    End Function
+#End Region
+
+#Region "Inventory"
+    Public Function GetInventoryEquipments() As List(Of cEquipmentStockData)
+        Dim result As New List(Of cEquipmentStockData)
+        sQuery = "SELECT DISTINCT idEngrEquipmentStockData, EESDEquipment, EESDBrand FROM EngrEquipmentStockData ORDER BY EESDEquipment"
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    Dim oReader As SqlDataReader = oCommand.ExecuteReader
+                    While oReader.Read
+                        Dim c As New cEquipmentStockData
+                        c.EESDEquipment = oReader("EESDEquipment")
+                        c.EESDBrand = oReader("EESDBrand")
+
+                        result.Add(c)
+                    End While
                 End Using
             Catch ex As Exception
 

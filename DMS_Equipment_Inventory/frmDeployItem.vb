@@ -26,7 +26,7 @@
     End Sub
 
     Private Sub btnDeploy_Click(sender As Object, e As EventArgs) Handles btnDeploy.Click
-        If modServerBridge.UpdateStockData(idEqStockData, sLocation) Then
+        If modServerBridge.UpdateStockData(idEqStockData, sLocation, "Deployed") Then
             If isEquipmentExist(idEqStockData, sLocation) Then
 
                 MsgBox(modServerBridge.UpdateDeploymentStatus(idEqStockData, 1, "Deployed", "Equipment has been deployed again"))

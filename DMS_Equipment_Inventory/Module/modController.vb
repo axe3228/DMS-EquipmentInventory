@@ -173,5 +173,40 @@
 
         ' lblEDCount.Text = "Equipment Deployed : " & lvDeployedEquipments.Items.Count
     End Sub
+
+
+#End Region
+
+#Region "Inventory"
+    Public Sub InventoryLoad(lv As ListView)
+        lv.Items.Clear()
+        Dim lst = modServerBridge.GetStockData(0)
+        For Each c In modServerBridge.GetInventoryEquipments
+            Dim oItem As New ListViewItem
+            oItem.Text = c.EESDEquipment
+            oItem.SubItems.Add(c.EESDBrand)
+            oItem.SubItems.Add(0)
+            oItem.SubItems.Add(0)
+            oItem.SubItems.Add(0)
+            oItem.SubItems.Add(0)
+            oItem.SubItems.Add(0)
+
+            lv.Items.Add(oItem)
+        Next
+
+        'Dim itemlist As New List(Of String)
+        'itemlist.Add("RED")
+        'itemlist.Add("RED")
+        'itemlist.Add("RED")
+        'itemlist.Add("GREEN")
+
+        Dim groups = lst.GroupBy(Function(value) value.EESDBrand)
+
+        'https://stackoverflow.com/questions/7325278/group-by-in-linq
+
+        For Each grp In groups
+            Console.WriteLine(grp(0).EESDEquipment & " - " & grp.Count)
+        Next
+    End Sub
 #End Region
 End Module
