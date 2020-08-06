@@ -356,6 +356,12 @@ Module modServerBridge
                     c.EESDState = oReader("EESDState")
                     c.EESDLocation = oReader("EESDLocation")
 
+                    If id = 0 Then
+                        c.eqnamexbrandname = oReader("EESDEquipment") & " - " & oReader("EESDBrand")
+                        c.eqnamexbrandnamexstate = oReader("EESDEquipment") & " - " & oReader("EESDBrand") & " - " & oReader("EESDState")
+                        c.eqnamexbrandnamexlocation = oReader("EESDEquipment") & " - " & oReader("EESDBrand") & " - " & oReader("EESDLocation")
+                    End If
+
                     result.Add(c)
                 End While
             End Using
@@ -508,7 +514,7 @@ Module modServerBridge
 #Region "Inventory"
     Public Function GetInventoryEquipments() As List(Of cEquipmentStockData)
         Dim result As New List(Of cEquipmentStockData)
-        sQuery = "SELECT DISTINCT idEngrEquipmentStockData, EESDEquipment, EESDBrand FROM EngrEquipmentStockData ORDER BY EESDEquipment"
+        sQuery = "SELECT DISTINCT EESDEquipment, EESDBrand FROM EngrEquipmentStockData ORDER BY EESDEquipment"
         Using oConnection As New SqlConnection(modGeneral.getConnectionString())
             Try
                 oConnection.Open()

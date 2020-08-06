@@ -18,4 +18,5 @@
     Public unEngrLocation As Integer
     Public LocatioName As String
 
+    Public StockCount As Integer
 End Class

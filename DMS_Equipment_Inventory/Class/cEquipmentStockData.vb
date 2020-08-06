@@ -8,4 +8,8 @@
     Public EESDModel As String
     Public EESDLocation As String
     Public EESDState As String
+
+    Public eqnamexbrandname As String
+    Public eqnamexbrandnamexstate As String
+    Public eqnamexbrandnamexlocation As String
 End Class

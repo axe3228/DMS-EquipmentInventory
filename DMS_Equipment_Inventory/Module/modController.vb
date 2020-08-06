@@ -136,7 +136,7 @@
         lv.Items.Clear()
         Dim lst As IEnumerable(Of cConstant) =
             From _lst In modServerBridge.GetLocation
-            Order By _lst.LocatioName
+            Order By _lst.LocatioName           
             Select _lst
 
         For Each c In lst
@@ -181,32 +181,118 @@
     Public Sub InventoryLoad(lv As ListView)
         lv.Items.Clear()
         Dim lst = modServerBridge.GetStockData(0)
-        For Each c In modServerBridge.GetInventoryEquipments
+        Dim lstTotalStock As New List(Of cConstant)
+        Dim lstStockNames As New List(Of cEMDInventory)
+        Dim lstStocksDefective As New List(Of cEMDInventory)
+        Dim lstStocksReturned As New List(Of cEMDInventory)
+        Dim lstStocksDeployed As New List(Of cEMDInventory)
+        Dim lstInStock As New List(Of cEMDInventory)
+        Dim lstInventory As New List(Of cEMDInventory)
+
+        'Step #1 Getting all the Equipment Name, Brand Name and Total Stocks* 
+        Dim grpnamexbrandxtotal = lst.GroupBy(Function(value) value.eqnamexbrandname)
+        For Each grp In grpnamexbrandxtotal
+            Dim _cls As New cEMDInventory
+
+            _cls.EquipmentName = grp(0).EESDEquipment
+            _cls.BrandName = grp(0).EESDBrand
+            _cls.TotalStock = grp.Count
+
+            lstStockNames.Add(_cls)
+        Next
+        '**************
+
+        'Step #2 Getting all the defectives, Returned and Deployed counts*
+        Dim grpStates = lst.GroupBy(Function(value) value.eqnamexbrandnamexstate)
+        For Each grp In grpStates
+            Dim _cls As New cEMDInventory
+            Select Case grp(0).EESDState
+                Case "Defective"
+                    _cls.EquipmentName = grp(0).EESDEquipment
+                    _cls.BrandName = grp(0).EESDBrand
+                    _cls.Defective = grp.Count
+
+                    lstStocksDefective.Add(_cls)
+                Case "Returned"
+                    _cls.EquipmentName = grp(0).EESDEquipment
+                    _cls.BrandName = grp(0).EESDBrand
+                    _cls.Returned = grp.Count
+
+                    lstStocksReturned.Add(_cls)
+                Case "Deployed"
+                    _cls.EquipmentName = grp(0).EESDEquipment
+                    _cls.BrandName = grp(0).EESDBrand
+                    _cls.Deployed = grp.Count
+
+                    lstStocksDeployed.Add(_cls)
+            End Select
+        Next
+        '**************
+
+        'Step #3 Getting all In Stocks*
+        Dim grpnamexbrandxlocation = lst.GroupBy(Function(value) value.eqnamexbrandnamexstate)
+        For Each grp In grpnamexbrandxlocation
+            If grp(0).EESDLocation = "Warehouse" Then
+                Dim _cls As New cEMDInventory
+                _cls.EquipmentName = grp(0).EESDEquipment
+                _cls.BrandName = grp(0).EESDBrand
+                _cls.InStock = grp.Count
+
+                lstInStock.Add(_cls)
+            End If
+        Next
+        '*****************************
+
+        'Sorting Gatherd Inventory Data
+        For Each stocknames In lstStockNames
+            Dim cInv As New cEMDInventory
+            cInv.EquipmentName = stocknames.EquipmentName
+            cInv.BrandName = stocknames.BrandName
+            cInv.TotalStock = stocknames.TotalStock
+            Dim id = stocknames.EquipmentName & " - " & stocknames.BrandName
+
+            For Each defectives In lstStocksDefective
+                If id = defectives.EquipmentName & " - " & defectives.BrandName Then
+                    cInv.Defective = defectives.Defective
+                End If
+            Next
+
+            For Each returned In lstStocksReturned
+                If id = returned.EquipmentName & " - " & returned.BrandName Then
+                    cInv.Returned = returned.Returned
+                End If
+            Next
+
+            For Each deployed In lstStocksDeployed
+                If id = deployed.EquipmentName & " - " & deployed.BrandName Then
+                    cInv.Deployed = deployed.Deployed
+                End If
+            Next
+
+            For Each inStock In lstInStock
+                If id = inStock.EquipmentName & " - " & inStock.BrandName Then
+                    cInv.InStock = inStock.InStock
+                End If
+            Next
+
+            lstInventory.Add(cInv)
+        Next
+        '****************     
+
+        For Each c In lstInventory
             Dim oItem As New ListViewItem
-            oItem.Text = c.EESDEquipment
-            oItem.SubItems.Add(c.EESDBrand)
-            oItem.SubItems.Add(0)
-            oItem.SubItems.Add(0)
-            oItem.SubItems.Add(0)
-            oItem.SubItems.Add(0)
-            oItem.SubItems.Add(0)
+            oItem.Text = c.EquipmentName
+            oItem.SubItems.Add(c.BrandName)
+            oItem.SubItems.Add(c.InStock)
+            oItem.SubItems.Add(c.Deployed)
+            oItem.SubItems.Add(c.Returned)
+            oItem.SubItems.Add(c.Defective)
+            oItem.SubItems.Add(c.TotalStock)
 
             lv.Items.Add(oItem)
         Next
 
-        'Dim itemlist As New List(Of String)
-        'itemlist.Add("RED")
-        'itemlist.Add("RED")
-        'itemlist.Add("RED")
-        'itemlist.Add("GREEN")
-
-        Dim groups = lst.GroupBy(Function(value) value.EESDBrand)
-
-        'https://stackoverflow.com/questions/7325278/group-by-in-linq
-
-        For Each grp In groups
-            Console.WriteLine(grp(0).EESDEquipment & " - " & grp.Count)
-        Next
+        'Console.WriteLine(grp(0).eqnamexbrandname & " - " & grp.Count)
     End Sub
 #End Region
 End Module

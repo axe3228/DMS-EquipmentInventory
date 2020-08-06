@@ -67,7 +67,7 @@
                 ' txtSearch.Text = eqName
               '  SearchBrand()
             Case EMDInventory.SearchStock
-
+                addColumn("ID", 70)
                 addColumn("Equipment", 170)
                 addColumn("Brand", 155)
                 addColumn("Model", 155)

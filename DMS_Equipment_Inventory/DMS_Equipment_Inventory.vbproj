@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Class\cConstant.vb" />
     <Compile Include="Class\cDeployment.vb" />
+    <Compile Include="Class\cEMDInventory.vb" />
     <Compile Include="Class\cEquipmentStockControl.vb" />
     <Compile Include="Class\cEquipmentStockData.vb" />
     <Compile Include="frmAddItem.Designer.vb">
