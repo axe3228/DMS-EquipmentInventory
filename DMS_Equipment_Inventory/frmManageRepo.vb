@@ -105,9 +105,13 @@
                 _class.idEngrEquipment = lvRepository.SelectedItems(0).Tag
                 _class.EngrEquipmentName = lvRepository.SelectedItems(0).SubItems(1).Text
             Case "Brand"
-                type = EMDInventory.Brand
+                _class.idEngrEquipmentBrand = lvRepository.SelectedItems(0).Tag
+                _class.EngrEquipmentName = lvRepository.SelectedItems(0).SubItems(1).Text
+                _class.BrandName = lvRepository.SelectedItems(0).SubItems(2).Text
             Case "Location"
                 type = EMDInventory.Location
+                _class.idEngrEquipment = lvRepository.SelectedItems(0).Tag
+                _class.EngrEquipmentName = lvRepository.SelectedItems(0).SubItems(1).Text
         End Select
 
     End Sub
@@ -117,12 +121,24 @@
 
         Select Case tscbRepository.SelectedItem
             Case "Equipment"
+                If modServerBridge.isEquipmentxBrandInUse("Equipment", _class.EngrEquipmentName, "") Then
+                    MsgBox("Item already in use you cant edit anymore")
+                    Exit Sub
+                End If
+
                 frm = New frmAddItem("Equipment")
                 frm.cConstant = _class
             Case "Brand"
-                type = EMDInventory.Brand
+                If modServerBridge.isEquipmentxBrandInUse("Brand", _class.EngrEquipmentName, _class.BrandName) Then
+                    MsgBox("Item already in use you cant edit anymore")
+                    Exit Sub
+                End If
+
+                frm = New frmAddItem("Brand")
+                frm.cConstant = _class
             Case "Location"
-                type = EMDInventory.Location
+                frm = New frmAddItem("Location")
+                frm.cConstant = _class
         End Select
 
         If frm IsNot Nothing Then

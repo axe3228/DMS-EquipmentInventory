@@ -42,6 +42,37 @@ Module modServerBridge
         Return result
     End Function
 
+    Public Function isEquipmentxBrandInUse(type As String, eq As String, brand As String) As Boolean
+        Dim result As Boolean = False
+
+        If type = "Equipment" Then
+            sQuery = "SELECT COUNT(*) FROM EngrEquipmentStockData WHERE EESDEquipment = @EESDEquipment AND Status = 1"
+        Else
+            sQuery = "SELECT COUNT(*) FROM EngrEquipmentStockData WHERE EESDEquipment = @EESDEquipment AND EESDBrand = @EESDBrand AND Status = 1"
+        End If
+
+
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@EESDEquipment", eq)
+                    If type <> "Equipment" Then
+                        oCommand.Parameters.AddWithValue("@EESDBrand", brand)
+                    End If
+
+                    Dim count = oCommand.ExecuteScalar
+                    If count > 0 Then result = True
+                End Using
+            Catch ex As Exception
+
+            End Try
+        End Using
+
+        Return result
+    End Function
+
 #Region "EQUIPMENT"
     Public Function POSTEquipment(name As String) As String
         sQuery = "INSERT INTO EngrEquipment (unEngrEquipment, EngrEqptName, unAccountUser) VALUES (@unEngrEquipment, @EngrEqptName, @unAccountUser)"
@@ -172,6 +203,33 @@ Module modServerBridge
 
         Return result
     End Function
+
+    Public Function UpdateBrand(id As String, eq As String, brand As String) As String
+        Dim result As String = ""
+        sQuery = "UPDATE EngrEquipmentBrand
+                  SET EngrEquipmentName = @EngrEquipmentName, EEBName = @EEBName
+                  WHERE idEngrEquipmentBrand = @idEngrEquipmentBrand"
+
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@idEngrEquipmentBrand", id)
+                    oCommand.Parameters.AddWithValue("@EngrEquipmentName", eq)
+                    oCommand.Parameters.AddWithValue("@EEBName", brand)
+
+                    oCommand.ExecuteNonQuery()
+
+                    result = "Brand has been updated"
+                End Using
+            Catch ex As Exception
+                result = ex.ToString
+            End Try
+        End Using
+
+        Return result
+    End Function
+
 #End Region
 
 #Region "Location"
@@ -219,6 +277,31 @@ Module modServerBridge
                 End Using
             Catch ex As Exception
 
+            End Try
+        End Using
+
+        Return result
+    End Function
+
+    Public Function UpdateLocation(id As String, name As String) As String
+        Dim result As String = ""
+        sQuery = "UPDATE EngrLocations
+                  SET elLocationName = @elLocationName
+                  WHERE idEngrLocation = @idEngrLocation"
+
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@idEngrLocation", id)
+                    oCommand.Parameters.AddWithValue("@elLocationName", name)
+
+                    oCommand.ExecuteNonQuery()
+
+                    result = "Location has been updated"
+                End Using
+            Catch ex As Exception
+                result = ex.ToString
             End Try
         End Using
 
@@ -288,6 +371,25 @@ Module modServerBridge
                     oCommand.ExecuteNonQuery()
 
                     msg = "Document Control has been save."
+                End Using
+            Catch ex As Exception
+                msg = ex.ToString
+            End Try
+        End Using
+        Return msg
+    End Function
+
+    Public Function CloseStockControl(id As Integer) As String
+        sQuery = "UPDATE EngrEquipmentStockControl SET EESCState = 'Close' WHERE idEngrEquipmentStockControl = @idEngrEquipmentStockControl"
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@idEngrEquipmentStockControl", id)
+
+                    oCommand.ExecuteNonQuery()
+
+                    msg = "Document Control has been closed"
                 End Using
             Catch ex As Exception
                 msg = ex.ToString
@@ -501,32 +603,6 @@ Module modServerBridge
 
                     Dim i = oCommand.ExecuteScalar
                     If i <> 0 Then result = True
-                End Using
-            Catch ex As Exception
-
-            End Try
-        End Using
-
-        Return result
-    End Function
-#End Region
-
-#Region "Inventory"
-    Public Function GetInventoryEquipments() As List(Of cEquipmentStockData)
-        Dim result As New List(Of cEquipmentStockData)
-        sQuery = "SELECT DISTINCT EESDEquipment, EESDBrand FROM EngrEquipmentStockData ORDER BY EESDEquipment"
-        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
-            Try
-                oConnection.Open()
-                Using oCommand As New SqlCommand(sQuery, oConnection)
-                    Dim oReader As SqlDataReader = oCommand.ExecuteReader
-                    While oReader.Read
-                        Dim c As New cEquipmentStockData
-                        c.EESDEquipment = oReader("EESDEquipment")
-                        c.EESDBrand = oReader("EESDBrand")
-
-                        result.Add(c)
-                    End While
                 End Using
             Catch ex As Exception
 

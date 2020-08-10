@@ -36,12 +36,22 @@
                 End If
             Case "Brand"
                 lblFormTitle.Text = "Add Brand"
+
+                If Not _class.idEngrEquipmentBrand = Nothing Then
+                    txtItem.Text = _class.EngrEquipmentName
+                    txtName.Text = _class.BrandName
+                    btnAdd.Text = "Update"
+                End If
             Case "Location"
                 lblItem.Visible = False
                 txtItem.Visible = False
                 btnSearchItem.Visible = False
                 lblFormTitle.Text = "Add Location"
 
+                If Not _class.idEngrLocation = Nothing Then
+                    txtName.Text = _class.LocatioName
+                    btnAdd.Text = "Update"
+                End If
         End Select
     End Sub
 
@@ -63,12 +73,19 @@
                 End If
 
             Case "Brand"
-                lblFormTitle.Text = "Add Brand"
-                MsgBox(modServerBridge.POSTBrand(txtItem.Text, txtName.Text))
+                If Not _class.idEngrEquipmentBrand = Nothing Then
+                    modServerBridge.UpdateBrand(_class.idEngrEquipmentBrand, txtItem.Text, txtName.Text)
+                Else
+                    MsgBox(modServerBridge.POSTBrand(txtItem.Text, txtName.Text))
+                End If
 
             Case "Location"
-                lblFormTitle.Text = "Add Location"
-                MsgBox(modServerBridge.POSTLocation(txtName.Text))
+                If Not _class.idEngrLocation = Nothing Then
+                    modServerBridge.UpdateLocation(_class.idEngrLocation, txtName.Text)
+                Else
+                    MsgBox(modServerBridge.POSTLocation(txtName.Text))
+                End If
+
         End Select
 
         FieldClear(Panel2)

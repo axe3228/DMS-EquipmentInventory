@@ -32,6 +32,9 @@ Partial Class frmMain
         Me.chBrand = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chStock = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chDeployed = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tpDeployment = New System.Windows.Forms.TabPage()
         Me.scDeployment = New System.Windows.Forms.SplitContainer()
         Me.lvLocation = New System.Windows.Forms.ListView()
@@ -75,8 +78,6 @@ Partial Class frmMain
         Me.lblEqStockControlID = New System.Windows.Forms.Label()
         Me.msReceiving = New System.Windows.Forms.MenuStrip()
         Me.tsbReceivingSave = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsbRRefreshData = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbReceive = New System.Windows.Forms.ToolStripButton()
         Me.lvEqStockData = New System.Windows.Forms.ListView()
@@ -96,9 +97,8 @@ Partial Class frmMain
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbClose = New System.Windows.Forms.ToolStripButton()
         Me.ilLocationIcons = New System.Windows.Forms.ImageList(Me.components)
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsbCloseDoc = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.tcMain.SuspendLayout()
         Me.tpInventory.SuspendLayout()
@@ -198,6 +198,21 @@ Partial Class frmMain
         Me.chDeployed.Text = "Deployed"
         Me.chDeployed.Width = 80
         '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "Returned"
+        Me.ColumnHeader6.Width = 100
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Defective"
+        Me.ColumnHeader7.Width = 100
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "Total Stock"
+        Me.ColumnHeader8.Width = 100
+        '
         'tpDeployment
         '
         Me.tpDeployment.BackColor = System.Drawing.Color.Gray
@@ -249,6 +264,8 @@ Partial Class frmMain
         Me.ilListViewIcons.TransparentColor = System.Drawing.Color.Transparent
         Me.ilListViewIcons.Images.SetKeyName(0, "document.png")
         Me.ilListViewIcons.Images.SetKeyName(1, "location.png")
+        Me.ilListViewIcons.Images.SetKeyName(2, "docClose.png")
+        Me.ilListViewIcons.Images.SetKeyName(3, "docOpen.png")
         '
         'msLocationCount
         '
@@ -586,7 +603,8 @@ Partial Class frmMain
         '
         Me.msReceiving.BackColor = System.Drawing.Color.Firebrick
         Me.msReceiving.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.msReceiving.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbReceivingSave, Me.ToolStripSeparator7, Me.tsbRRefreshData, Me.ToolStripSeparator8, Me.tsbReceive})
+        Me.msReceiving.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.msReceiving.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbReceivingSave, Me.ToolStripSeparator8, Me.tsbReceive, Me.ToolStripSeparator6, Me.tsbCloseDoc})
         Me.msReceiving.Location = New System.Drawing.Point(0, 97)
         Me.msReceiving.Name = "msReceiving"
         Me.msReceiving.Size = New System.Drawing.Size(860, 27)
@@ -600,24 +618,8 @@ Partial Class frmMain
         Me.tsbReceivingSave.Image = CType(resources.GetObject("tsbReceivingSave.Image"), System.Drawing.Image)
         Me.tsbReceivingSave.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.tsbReceivingSave.Name = "tsbReceivingSave"
-        Me.tsbReceivingSave.Size = New System.Drawing.Size(51, 20)
+        Me.tsbReceivingSave.Size = New System.Drawing.Size(56, 20)
         Me.tsbReceivingSave.Text = "Save"
-        '
-        'ToolStripSeparator7
-        '
-        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-        Me.ToolStripSeparator7.Size = New System.Drawing.Size(6, 23)
-        Me.ToolStripSeparator7.Visible = False
-        '
-        'tsbRRefreshData
-        '
-        Me.tsbRRefreshData.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.tsbRRefreshData.Image = CType(resources.GetObject("tsbRRefreshData.Image"), System.Drawing.Image)
-        Me.tsbRRefreshData.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbRRefreshData.Name = "tsbRRefreshData"
-        Me.tsbRRefreshData.Size = New System.Drawing.Size(66, 20)
-        Me.tsbRRefreshData.Text = "Refresh"
-        Me.tsbRRefreshData.Visible = False
         '
         'ToolStripSeparator8
         '
@@ -630,7 +632,7 @@ Partial Class frmMain
         Me.tsbReceive.Image = CType(resources.GetObject("tsbReceive.Image"), System.Drawing.Image)
         Me.tsbReceive.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.tsbReceive.Name = "tsbReceive"
-        Me.tsbReceive.Size = New System.Drawing.Size(67, 20)
+        Me.tsbReceive.Size = New System.Drawing.Size(72, 20)
         Me.tsbReceive.Text = "Receive"
         '
         'lvEqStockData
@@ -758,20 +760,19 @@ Partial Class frmMain
         Me.ilLocationIcons.TransparentColor = System.Drawing.Color.Transparent
         Me.ilLocationIcons.Images.SetKeyName(0, "location.png")
         '
-        'ColumnHeader6
+        'ToolStripSeparator6
         '
-        Me.ColumnHeader6.Text = "Returned"
-        Me.ColumnHeader6.Width = 100
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 23)
         '
-        'ColumnHeader7
+        'tsbCloseDoc
         '
-        Me.ColumnHeader7.Text = "Defective"
-        Me.ColumnHeader7.Width = 100
-        '
-        'ColumnHeader8
-        '
-        Me.ColumnHeader8.Text = "Total Stock"
-        Me.ColumnHeader8.Width = 100
+        Me.tsbCloseDoc.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.tsbCloseDoc.Image = CType(resources.GetObject("tsbCloseDoc.Image"), System.Drawing.Image)
+        Me.tsbCloseDoc.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbCloseDoc.Name = "tsbCloseDoc"
+        Me.tsbCloseDoc.Size = New System.Drawing.Size(59, 20)
+        Me.tsbCloseDoc.Text = "Close"
         '
         'frmMain
         '
@@ -882,8 +883,6 @@ Partial Class frmMain
     Friend WithEvents lblEqStockControlID As Label
     Friend WithEvents msReceiving As MenuStrip
     Friend WithEvents tsbReceivingSave As ToolStripButton
-    Friend WithEvents ToolStripSeparator7 As ToolStripSeparator
-    Friend WithEvents tsbRRefreshData As ToolStripButton
     Friend WithEvents ToolStripSeparator8 As ToolStripSeparator
     Friend WithEvents tsbReceive As ToolStripButton
     Friend WithEvents lvEqStockData As ListView
@@ -901,4 +900,6 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader6 As ColumnHeader
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents ColumnHeader8 As ColumnHeader
+    Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
+    Friend WithEvents tsbCloseDoc As ToolStripButton
 End Class

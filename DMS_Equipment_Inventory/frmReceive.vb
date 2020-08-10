@@ -1,6 +1,7 @@
 ﻿Public Class frmReceive
 
     Private _idControl As Integer
+    Private _cStockData As cEquipmentStockData
 
     Public Property EquipmentControlID As Integer
         Get
@@ -8,6 +9,15 @@
         End Get
         Set(value As Integer)
             _idControl = value
+        End Set
+    End Property
+
+    Public Property frStockData As cEquipmentStockData
+        Get
+            Return _cStockData
+        End Get
+        Set(value As cEquipmentStockData)
+            _cStockData = value
         End Set
     End Property
 

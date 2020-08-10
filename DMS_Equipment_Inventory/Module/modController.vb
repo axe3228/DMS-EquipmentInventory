@@ -75,11 +75,12 @@
         lv.Items.Clear()
         For Each c In lst
             Dim oItem As New ListViewItem
-            oItem.Text = Format(c.unEngrEquipmentStockControl, "0000")
+            oItem.Text = Format(c.unEngrEquipmentStockControl, "0000") & " - " & c.EESCState
             oItem.SubItems.Add(c.TimeStamp)
             oItem.SubItems.Add(c.EESCRemarks)
+            oItem.SubItems.Add(c.EESCState)
 
-            oItem.ImageKey = "document.png"
+            oItem.ImageKey = "doc" & c.EESCState & ".png"
             oItem.Tag = c.idEngrEquipmentStockControl
 
             lv.Items.Add(oItem)

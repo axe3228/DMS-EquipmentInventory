@@ -56,11 +56,17 @@
     Private Sub lvEqStockControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvEqStockControl.SelectedIndexChanged
         If lvEqStockControl.SelectedItems.Count < 1 Then Return
         idStockControl = lvEqStockControl.SelectedItems(0).Tag
-        lblEqStockControlID.Text = "Document ID  : " & lvEqStockControl.SelectedItems(0).Text
+        lblEqStockControlID.Text = "Document ID  : " & Format(lvEqStockControl.SelectedItems(0).Tag, "0000")
         dtpEqStockControlDate.Value = lvEqStockControl.SelectedItems(0).SubItems(1).Text
         rtbEqStockControlRemarks.Text = lvEqStockControl.SelectedItems(0).SubItems(2).Text
+        Dim controlState = lvEqStockControl.SelectedItems(0).SubItems(3).Text
 
-        msReceiving.Visible = True
+        If controlState = "Close" Then
+            msReceiving.Visible = False
+        Else
+            msReceiving.Visible = True
+        End If
+
         modController.StockDataLoad(lvEqStockData, idStockControl)
     End Sub
 
@@ -84,7 +90,28 @@
         If Not frm.ShowDialog() = Windows.Forms.DialogResult.OK Then Return
         modController.StockDataLoad(lvEqStockData, idStockControl)
     End Sub
+    Private Sub tsbCloseDoc_Click(sender As Object, e As EventArgs) Handles tsbCloseDoc.Click
+        If idStockControl <> 0 Then
+            MsgBox(modServerBridge.CloseStockControl(idStockControl))
+            modController.StockControlLoad(lvEqStockControl)
+        Else
+            Exit Sub
+        End If
+    End Sub
 
+    Private Sub lvEqStockData_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvEqStockData.SelectedIndexChanged
+        If lvEqStockData.SelectedItems.Count < 1 Then Return
+        'To be continue
+    End Sub
+
+
+    Private Sub lvEqStockData_DoubleClick(sender As Object, e As EventArgs) Handles lvEqStockData.DoubleClick
+        Dim _class As New cEquipmentStockData
+        _class.EESDEquipment = lvEqStockData.SelectedItems(0).SubItems(1).Text
+
+        Dim frm As New frmReceive
+        If Not frm.ShowDialog() = Windows.Forms.DialogResult.OK Then Return
+    End Sub
 #End Region
 
 #Region "Deployment"
@@ -124,6 +151,7 @@
             modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
         End If
     End Sub
+
 
 #End Region
 
