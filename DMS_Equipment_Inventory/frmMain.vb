@@ -1,7 +1,11 @@
 ﻿Public Class frmMain
     Private frm As frmManageRepo = Nothing
     Private idStockControl As Integer
+    Private idStockData As Integer
     Private idLocation As Integer
+    Private controlState As String
+    Private deploymentLocation As String
+    Private deploymentCount As Integer
 
     Private Sub tsbClose_Click(sender As Object, e As EventArgs) Handles tsbClose.Click
         Me.Close()
@@ -47,7 +51,9 @@
 
 #Region "Receiving"
     Private Sub tsbNewDocu_Click(sender As Object, e As EventArgs) Handles tsbNewDocu.Click
-        POSTEquipmentStockControl()
+        modServerBridge.AutoCloseStockControl() 'Auto Close Data Control Every New Document Created
+
+        modServerBridge.POSTEquipmentStockControl()
 
         modController.StockControlLoad(lvEqStockControl)
         msReceiving.Visible = False
@@ -57,9 +63,10 @@
         If lvEqStockControl.SelectedItems.Count < 1 Then Return
         idStockControl = lvEqStockControl.SelectedItems(0).Tag
         lblEqStockControlID.Text = "Document ID  : " & Format(lvEqStockControl.SelectedItems(0).Tag, "0000")
-        dtpEqStockControlDate.Value = lvEqStockControl.SelectedItems(0).SubItems(1).Text
         rtbEqStockControlRemarks.Text = lvEqStockControl.SelectedItems(0).SubItems(2).Text
-        Dim controlState = lvEqStockControl.SelectedItems(0).SubItems(3).Text
+        controlState = lvEqStockControl.SelectedItems(0).SubItems(3).Text
+        Dim _date As DateTime = lvEqStockControl.SelectedItems(0).SubItems(1).Text
+        lblRDate.Text = "Date  : " & _date.ToString("MM/dd/yyyy hh:mm tt")
 
         If controlState = "Close" Then
             msReceiving.Visible = False
@@ -77,7 +84,7 @@
 
         _class.idEngrEquipmentStockControl = idStockControl
         _class.EESCRemarks = rtbEqStockControlRemarks.Text
-        _class.TimeStamp = dtpEqStockControlDate.Text & " " & TimeOfDay.ToString("hh:mm:ss tt")
+        ' _class.TimeStamp = dtpEqStockControlDate.Text & " " & TimeOfDay.ToString("hh:mm:ss tt")
 
         MsgBox(modServerBridge.UpdateStockControl(_class))
         modController.StockControlLoad(lvEqStockControl)
@@ -101,57 +108,86 @@
 
     Private Sub lvEqStockData_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvEqStockData.SelectedIndexChanged
         If lvEqStockData.SelectedItems.Count < 1 Then Return
-        'To be continue
     End Sub
 
 
     Private Sub lvEqStockData_DoubleClick(sender As Object, e As EventArgs) Handles lvEqStockData.DoubleClick
+        If controlState = "Close" Then Return
         Dim _class As New cEquipmentStockData
+        _class.idEngrEquipmentStockData = lvEqStockData.SelectedItems(0).Tag
         _class.EESDEquipment = lvEqStockData.SelectedItems(0).SubItems(1).Text
+        _class.EESDBrand = lvEqStockData.SelectedItems(0).SubItems(2).Text
+        _class.EESDSerial = lvEqStockData.SelectedItems(0).SubItems(3).Text
+        _class.EESDModel = lvEqStockData.SelectedItems(0).SubItems(4).Text
 
         Dim frm As New frmReceive
+        frm.frStockData = _class
         If Not frm.ShowDialog() = Windows.Forms.DialogResult.OK Then Return
+        modController.StockDataLoad(lvEqStockData, idStockControl)
     End Sub
 #End Region
 
 #Region "Deployment"
     Private Sub tsbDeploy_Click(sender As Object, e As EventArgs) Handles tsbDeploy.Click
         Dim frm As New frmDeployItem
-        frm.FDILocation = lvLocation.SelectedItems(0).Text
+        frm.FDILocation = deploymentLocation
         If Not frm.ShowDialog() = Windows.Forms.DialogResult.OK Then Return
 
-        modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
+        lblEqCount.Text = "Equipment Deployed : " & deploymentCount
+        modController.DeployedEquipmentsLoad(lvDeployedEquipments, deploymentLocation)
+        modController.DeploymentLocationsLoad(lvLocation)
     End Sub
 
     Private Sub lvLocation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvLocation.SelectedIndexChanged
         If lvLocation.SelectedItems.Count < 1 Then Return
         idLocation = lvLocation.SelectedItems(0).Tag
+        deploymentLocation = lvLocation.SelectedItems(0).Text
+        deploymentCount = lvLocation.SelectedItems(0).SubItems(2).Text
 
-        lblLocation.Text = "Location : " & lvLocation.SelectedItems(0).Text
+        lblLocation.Text = "Location : " & deploymentLocation
+        msDeployment.Visible = True
+        'lblEqCount.Text = "Equipment Deployed : " & deploymentCount
         modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
     End Sub
 
     Private Sub tsbReturn_Click(sender As Object, e As EventArgs) Handles tsbReturn.Click
-        If modServerBridge.UpdateStockData(lvDeployedEquipments.SelectedItems(0).Tag, "Warehouse", "Returned") Then
+        If modServerBridge.UpdateStockData(idStockData, "Warehouse", "Returned") Then
 
-            MsgBox(modServerBridge.UpdateDeploymentStatus(lvDeployedEquipments.SelectedItems(0).SubItems(6).Text, 0, "Returned", "Equipment has been returned"))
-            modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
+            MsgBox(modServerBridge.UpdateDeploymentStatus(idStockControl, 0, "Returned", "Equipment has been returned"))
+
+            lblEqCount.Text = "Equipment Deployed : " & deploymentCount
+            modController.DeployedEquipmentsLoad(lvDeployedEquipments, deploymentLocation)
+            modController.DeploymentLocationsLoad(lvLocation)
         End If
     End Sub
 
     Private Sub lvDeployedEquipments_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDeployedEquipments.SelectedIndexChanged
         If lvDeployedEquipments.SelectedItems.Count < 1 Then Return
-
+        idStockControl = lvDeployedEquipments.SelectedItems(0).SubItems(6).Text
+        idStockData = lvDeployedEquipments.SelectedItems(0).Tag
     End Sub
 
     Private Sub tsbDefective_Click(sender As Object, e As EventArgs) Handles tsbDefective.Click
-        If modServerBridge.UpdateStockData(lvDeployedEquipments.SelectedItems(0).Tag, "Bin", "Defective") Then
+        If modServerBridge.UpdateStockData(idStockData, "Bin", "Defective") Then
 
-            MsgBox(modServerBridge.UpdateDeploymentStatus(lvDeployedEquipments.SelectedItems(0).SubItems(6).Text, 0, "Defective", "Equipment has been pollout"))
-            modController.DeployedEquipmentsLoad(lvDeployedEquipments, lvLocation.SelectedItems(0).Text)
+            MsgBox(modServerBridge.UpdateDeploymentStatus(idStockControl, 0, "Defective", "Equipment has been pollout"))
+
+            lblEqCount.Text = "Equipment Deployed : " & deploymentCount
+            modController.DeployedEquipmentsLoad(lvDeployedEquipments, deploymentLocation)
+            modController.DeploymentLocationsLoad(lvLocation)
         End If
     End Sub
 
+    Private Sub lvDeployedEquipments_KeyDown(sender As Object, e As KeyEventArgs) Handles lvDeployedEquipments.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            If modServerBridge.UpdateStockData(idStockData, "Warehouse", "Returned") Then
+
+                MsgBox(modServerBridge.UpdateDeploymentStatus(idStockControl, 0, "Deleted", "Deployment Details have been remove"))
+                modController.DeployedEquipmentsLoad(lvDeployedEquipments, deploymentLocation)
+                modController.DeploymentLocationsLoad(lvLocation)
+            End If
+        End If
+    End Sub
 
 #End Region
 

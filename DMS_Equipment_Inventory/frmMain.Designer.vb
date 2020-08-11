@@ -44,9 +44,9 @@ Partial Class frmMain
         Me.msLocationCount = New System.Windows.Forms.MenuStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.scDepContainer = New System.Windows.Forms.SplitContainer()
-        Me.lblEDCount = New System.Windows.Forms.Label()
+        Me.lblEqCount = New System.Windows.Forms.Label()
         Me.lblLocation = New System.Windows.Forms.Label()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.msDeployment = New System.Windows.Forms.MenuStrip()
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbDeploy = New System.Windows.Forms.ToolStripButton()
@@ -73,20 +73,20 @@ Partial Class frmMain
         Me.scRContainer = New System.Windows.Forms.SplitContainer()
         Me.rtbEqStockControlRemarks = New System.Windows.Forms.RichTextBox()
         Me.lblRRemarks = New System.Windows.Forms.Label()
-        Me.dtpEqStockControlDate = New System.Windows.Forms.DateTimePicker()
         Me.lblRDate = New System.Windows.Forms.Label()
         Me.lblEqStockControlID = New System.Windows.Forms.Label()
         Me.msReceiving = New System.Windows.Forms.MenuStrip()
         Me.tsbReceivingSave = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbReceive = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsbCloseDoc = New System.Windows.Forms.ToolStripButton()
         Me.lvEqStockData = New System.Windows.Forms.ListView()
         Me.chRID = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chRItem = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chRBrand = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chRSerial = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chRModel = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tsMain = New System.Windows.Forms.ToolStrip()
         Me.tslManage = New System.Windows.Forms.ToolStripLabel()
         Me.tsbEquipment = New System.Windows.Forms.ToolStripButton()
@@ -97,8 +97,6 @@ Partial Class frmMain
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbClose = New System.Windows.Forms.ToolStripButton()
         Me.ilLocationIcons = New System.Windows.Forms.ImageList(Me.components)
-        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsbCloseDoc = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.tcMain.SuspendLayout()
         Me.tpInventory.SuspendLayout()
@@ -112,7 +110,7 @@ Partial Class frmMain
         Me.scDepContainer.Panel1.SuspendLayout()
         Me.scDepContainer.Panel2.SuspendLayout()
         Me.scDepContainer.SuspendLayout()
-        Me.MenuStrip1.SuspendLayout()
+        Me.msDeployment.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.scReceiving, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scReceiving.Panel1.SuspendLayout()
@@ -297,9 +295,9 @@ Partial Class frmMain
         'scDepContainer.Panel1
         '
         Me.scDepContainer.Panel1.BackColor = System.Drawing.Color.Firebrick
-        Me.scDepContainer.Panel1.Controls.Add(Me.lblEDCount)
+        Me.scDepContainer.Panel1.Controls.Add(Me.lblEqCount)
         Me.scDepContainer.Panel1.Controls.Add(Me.lblLocation)
-        Me.scDepContainer.Panel1.Controls.Add(Me.MenuStrip1)
+        Me.scDepContainer.Panel1.Controls.Add(Me.msDeployment)
         '
         'scDepContainer.Panel2
         '
@@ -308,16 +306,17 @@ Partial Class frmMain
         Me.scDepContainer.SplitterDistance = 106
         Me.scDepContainer.TabIndex = 0
         '
-        'lblEDCount
+        'lblEqCount
         '
-        Me.lblEDCount.AutoSize = True
-        Me.lblEDCount.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEDCount.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.lblEDCount.Location = New System.Drawing.Point(8, 31)
-        Me.lblEDCount.Name = "lblEDCount"
-        Me.lblEDCount.Size = New System.Drawing.Size(145, 13)
-        Me.lblEDCount.TabIndex = 1
-        Me.lblEDCount.Text = "Equipment Deployed : 0"
+        Me.lblEqCount.AutoSize = True
+        Me.lblEqCount.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEqCount.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.lblEqCount.Location = New System.Drawing.Point(8, 31)
+        Me.lblEqCount.Name = "lblEqCount"
+        Me.lblEqCount.Size = New System.Drawing.Size(145, 13)
+        Me.lblEqCount.TabIndex = 1
+        Me.lblEqCount.Text = "Equipment Deployed : 0"
+        Me.lblEqCount.Visible = False
         '
         'lblLocation
         '
@@ -330,17 +329,18 @@ Partial Class frmMain
         Me.lblLocation.TabIndex = 0
         Me.lblLocation.Text = "Location : "
         '
-        'MenuStrip1
+        'msDeployment
         '
-        Me.MenuStrip1.BackColor = System.Drawing.Color.Firebrick
-        Me.MenuStrip1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.MenuStrip1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton6, Me.ToolStripSeparator5, Me.tsbDeploy, Me.ToolStripSeparator4, Me.tsbReturn, Me.tss2, Me.tsbDefective})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 79)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(873, 27)
-        Me.MenuStrip1.TabIndex = 2
-        Me.MenuStrip1.Text = "MenuStrip1"
+        Me.msDeployment.BackColor = System.Drawing.Color.Firebrick
+        Me.msDeployment.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.msDeployment.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.msDeployment.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton6, Me.ToolStripSeparator5, Me.tsbDeploy, Me.ToolStripSeparator4, Me.tsbReturn, Me.tss2, Me.tsbDefective})
+        Me.msDeployment.Location = New System.Drawing.Point(0, 79)
+        Me.msDeployment.Name = "msDeployment"
+        Me.msDeployment.Size = New System.Drawing.Size(873, 27)
+        Me.msDeployment.TabIndex = 2
+        Me.msDeployment.Text = "MenuStrip1"
+        Me.msDeployment.Visible = False
         '
         'ToolStripButton6
         '
@@ -537,7 +537,6 @@ Partial Class frmMain
         Me.scRContainer.Panel1.BackColor = System.Drawing.Color.Firebrick
         Me.scRContainer.Panel1.Controls.Add(Me.rtbEqStockControlRemarks)
         Me.scRContainer.Panel1.Controls.Add(Me.lblRRemarks)
-        Me.scRContainer.Panel1.Controls.Add(Me.dtpEqStockControlDate)
         Me.scRContainer.Panel1.Controls.Add(Me.lblRDate)
         Me.scRContainer.Panel1.Controls.Add(Me.lblEqStockControlID)
         Me.scRContainer.Panel1.Controls.Add(Me.msReceiving)
@@ -568,14 +567,6 @@ Partial Class frmMain
         Me.lblRRemarks.Size = New System.Drawing.Size(71, 13)
         Me.lblRRemarks.TabIndex = 4
         Me.lblRRemarks.Text = "Remarks : "
-        '
-        'dtpEqStockControlDate
-        '
-        Me.dtpEqStockControlDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpEqStockControlDate.Location = New System.Drawing.Point(60, 30)
-        Me.dtpEqStockControlDate.Name = "dtpEqStockControlDate"
-        Me.dtpEqStockControlDate.Size = New System.Drawing.Size(109, 20)
-        Me.dtpEqStockControlDate.TabIndex = 3
         '
         'lblRDate
         '
@@ -635,10 +626,24 @@ Partial Class frmMain
         Me.tsbReceive.Size = New System.Drawing.Size(72, 20)
         Me.tsbReceive.Text = "Receive"
         '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 23)
+        '
+        'tsbCloseDoc
+        '
+        Me.tsbCloseDoc.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.tsbCloseDoc.Image = CType(resources.GetObject("tsbCloseDoc.Image"), System.Drawing.Image)
+        Me.tsbCloseDoc.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbCloseDoc.Name = "tsbCloseDoc"
+        Me.tsbCloseDoc.Size = New System.Drawing.Size(59, 20)
+        Me.tsbCloseDoc.Text = "Close"
+        '
         'lvEqStockData
         '
         Me.lvEqStockData.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.lvEqStockData.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chRID, Me.chRItem, Me.chRBrand, Me.chRSerial, Me.chRModel, Me.ColumnHeader5})
+        Me.lvEqStockData.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chRID, Me.chRItem, Me.chRBrand, Me.chRSerial, Me.chRModel})
         Me.lvEqStockData.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lvEqStockData.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvEqStockData.FullRowSelect = True
@@ -673,11 +678,6 @@ Partial Class frmMain
         '
         Me.chRModel.Text = "Model"
         Me.chRModel.Width = 120
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Text = "State"
-        Me.ColumnHeader5.Width = 80
         '
         'tsMain
         '
@@ -760,20 +760,6 @@ Partial Class frmMain
         Me.ilLocationIcons.TransparentColor = System.Drawing.Color.Transparent
         Me.ilLocationIcons.Images.SetKeyName(0, "location.png")
         '
-        'ToolStripSeparator6
-        '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 23)
-        '
-        'tsbCloseDoc
-        '
-        Me.tsbCloseDoc.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.tsbCloseDoc.Image = CType(resources.GetObject("tsbCloseDoc.Image"), System.Drawing.Image)
-        Me.tsbCloseDoc.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbCloseDoc.Name = "tsbCloseDoc"
-        Me.tsbCloseDoc.Size = New System.Drawing.Size(59, 20)
-        Me.tsbCloseDoc.Text = "Close"
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -802,8 +788,8 @@ Partial Class frmMain
         Me.scDepContainer.Panel2.ResumeLayout(False)
         CType(Me.scDepContainer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.scDepContainer.ResumeLayout(False)
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
+        Me.msDeployment.ResumeLayout(False)
+        Me.msDeployment.PerformLayout()
         Me.TabPage1.ResumeLayout(False)
         Me.scReceiving.Panel1.ResumeLayout(False)
         Me.scReceiving.Panel1.PerformLayout()
@@ -854,9 +840,9 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader2 As ColumnHeader
     Friend WithEvents scDepContainer As SplitContainer
     Friend WithEvents ilLocationIcons As ImageList
-    Friend WithEvents lblEDCount As Label
+    Friend WithEvents lblEqCount As Label
     Friend WithEvents lblLocation As Label
-    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents msDeployment As MenuStrip
     Friend WithEvents ToolStripButton6 As ToolStripButton
     Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
     Friend WithEvents tsbDeploy As ToolStripButton
@@ -878,7 +864,6 @@ Partial Class frmMain
     Friend WithEvents scRContainer As SplitContainer
     Friend WithEvents rtbEqStockControlRemarks As RichTextBox
     Friend WithEvents lblRRemarks As Label
-    Friend WithEvents dtpEqStockControlDate As DateTimePicker
     Friend WithEvents lblRDate As Label
     Friend WithEvents lblEqStockControlID As Label
     Friend WithEvents msReceiving As MenuStrip
@@ -894,7 +879,6 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader3 As ColumnHeader
     Friend WithEvents ColumnHeader4 As ColumnHeader
     Friend WithEvents ilListViewIcons As ImageList
-    Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents tss2 As ToolStripSeparator
     Friend WithEvents tsbDefective As ToolStripButton
     Friend WithEvents ColumnHeader6 As ColumnHeader

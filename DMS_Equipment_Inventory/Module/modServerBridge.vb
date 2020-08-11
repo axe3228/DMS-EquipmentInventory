@@ -359,14 +359,13 @@ Module modServerBridge
     End Function
 
     Public Function UpdateStockControl(_class As cEquipmentStockControl) As String
-        sQuery = "UPDATE EngrEquipmentStockControl SET EESCRemarks = @EESCRemarks, TimeStamp = @TimeStamp WHERE idEngrEquipmentStockControl = @idEngrEquipmentStockControl"
+        sQuery = "UPDATE EngrEquipmentStockControl SET EESCRemarks = @EESCRemarks WHERE idEngrEquipmentStockControl = @idEngrEquipmentStockControl"
         Using oConnection As New SqlConnection(modGeneral.getConnectionString())
             Try
                 oConnection.Open()
                 Using oCommand As New SqlCommand(sQuery, oConnection)
                     oCommand.Parameters.AddWithValue("@idEngrEquipmentStockControl", _class.idEngrEquipmentStockControl)
                     oCommand.Parameters.AddWithValue("@EESCRemarks", _class.EESCRemarks)
-                    oCommand.Parameters.AddWithValue("@TimeStamp", _class.TimeStamp)
 
                     oCommand.ExecuteNonQuery()
 
@@ -398,6 +397,23 @@ Module modServerBridge
         Return msg
     End Function
 
+    Public Sub AutoCloseStockControl()
+        Dim id As Integer = 0
+        sQuery = "SELECT MAX(idEngrEquipmentStockControl) FROM EngrEquipmentStockControl"
+
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    id = oCommand.ExecuteScalar
+                    If id <> 0 Then CloseStockControl(id)
+                End Using
+            Catch ex As Exception
+
+            End Try
+        End Using
+    End Sub
 
     '- - - - - - - - - - Equipment Stock Data - - - - - - - - - - -
     Public Function POSTEquipmentStockData(_class As cEquipmentStockData) As String
@@ -494,6 +510,34 @@ Module modServerBridge
         End Using
 
         Return result
+    End Function
+
+    Public Function UpdateStockDataEqDetails(_class As cEquipmentStockData) As String
+        Dim result = ""
+
+        sQuery = "UPDATE EngrEquipmentStockData 
+                  SET EESDEquipment = @EESDEquipment, EESDBrand = @EESDBrand, EESDSerial = @EESDSerial, EESDModel = @EESDModel 
+                  WHERE idEngrEquipmentStockData = @idEngrEquipmentStockData"
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@idEngrEquipmentStockData", _class.idEngrEquipmentStockData)
+                    oCommand.Parameters.AddWithValue("@EESDEquipment", _class.EESDEquipment)
+                    oCommand.Parameters.AddWithValue("@EESDBrand", _class.EESDBrand)
+                    oCommand.Parameters.AddWithValue("@EESDSerial", _class.EESDSerial)
+                    oCommand.Parameters.AddWithValue("@EESDModel", _class.EESDModel)
+
+                    oCommand.ExecuteNonQuery()
+
+                    result = "Stock Data has been updated"
+                End Using
+            Catch ex As Exception
+                result = ex.ToString
+            End Try
+        End Using
+
+        Return Result
     End Function
 
 #End Region
@@ -603,6 +647,28 @@ Module modServerBridge
 
                     Dim i = oCommand.ExecuteScalar
                     If i <> 0 Then result = True
+                End Using
+            Catch ex As Exception
+
+            End Try
+        End Using
+
+        Return result
+    End Function
+
+    Public Function DeployedEqCounter(location As String) As Integer
+        Dim result = 0
+        sQuery = "SELECT COUNT(*) FROM EngrEquipmentDeployment WHERE EEDLocation = @EEDLocation AND Status = 1"
+
+        Using oConnection As New SqlConnection(modGeneral.getConnectionString())
+
+            Try
+                oConnection.Open()
+                Using oCommand As New SqlCommand(sQuery, oConnection)
+                    oCommand.Parameters.AddWithValue("@EEDLocation", location)
+                    'oCommand.ExecuteNonQuery()
+
+                    result = oCommand.ExecuteScalar
                 End Using
             Catch ex As Exception
 

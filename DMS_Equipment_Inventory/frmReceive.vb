@@ -45,13 +45,6 @@
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Dim _cls As New cEquipmentStockData
-
-        _cls.idEngrEquipmentStockControl = _idControl
-        _cls.EESDEquipment = txtEquipment.Text
-        _cls.EESDBrand = txtBrand.Text
-        _cls.EESDSerial = txtSerial.Text
-        _cls.EESDModel = txtModel.Text
-
         For Each child As Control In Panel2.Controls
             Select Case True
                 Case TypeOf child Is TextBox
@@ -62,7 +55,20 @@
             End Select
         Next
 
-        MsgBox(modServerBridge.POSTEquipmentStockData(_cls))
+        _cls.EESDEquipment = txtEquipment.Text
+        _cls.EESDBrand = txtBrand.Text
+        _cls.EESDSerial = txtSerial.Text
+        _cls.EESDModel = txtModel.Text
+
+        If _idControl = 0 Then
+            _cls.idEngrEquipmentStockData = _cStockData.idEngrEquipmentStockData
+
+            MsgBox(modServerBridge.UpdateStockDataEqDetails(_cls))
+        Else
+            _cls.idEngrEquipmentStockControl = _idControl
+
+            MsgBox(modServerBridge.POSTEquipmentStockData(_cls))
+        End If
 
         Me.DialogResult = Windows.Forms.DialogResult.OK
     End Sub
@@ -71,5 +77,17 @@
         If e.KeyCode = Keys.Enter Then
             btnAdd.PerformClick()
         End If
+    End Sub
+
+    Private Sub frmReceive_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If _idControl > 0 Then Return
+
+        txtEquipment.Text = _cStockData.EESDEquipment
+        txtBrand.Text = _cStockData.EESDBrand
+        txtSerial.Text = _cStockData.EESDSerial
+        txtModel.Text = _cStockData.EESDModel
+
+        lblTitle.Text = "Update Stock Data"
+        btnAdd.Text = "Update"
     End Sub
 End Class

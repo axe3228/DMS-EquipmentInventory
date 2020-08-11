@@ -142,8 +142,10 @@
 
         For Each c In lst
             Dim oItem As New ListViewItem
+            Dim count = modServerBridge.DeployedEqCounter(c.LocatioName)
             oItem.Text = c.LocatioName
-            'oItem.SubItems.Add("Equipment Deployed : " & EMDIModel.GetDeployEquipmentCount(c.ELName))
+            oItem.SubItems.Add("Equipment Deployed : " & count)
+            oItem.SubItems.Add(count)
 
             oItem.ImageKey = "location.png"
             oItem.Tag = c.idEngrLocation
