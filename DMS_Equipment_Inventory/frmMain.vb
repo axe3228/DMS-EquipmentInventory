@@ -170,7 +170,7 @@
     Private Sub tsbDefective_Click(sender As Object, e As EventArgs) Handles tsbDefective.Click
         If modServerBridge.UpdateStockData(idStockData, "Bin", "Defective") Then
 
-            MsgBox(modServerBridge.UpdateDeploymentStatus(idStockControl, 0, "Defective", "Equipment has been pollout"))
+            MsgBox(modServerBridge.UpdateDeploymentStatus(idStockControl, 0, "Defective", "Equipment has been pullout"))
 
             lblEqCount.Text = "Equipment Deployed : " & deploymentCount
             modController.DeployedEquipmentsLoad(lvDeployedEquipments, deploymentLocation)
